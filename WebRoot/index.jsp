@@ -25,14 +25,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	ul.imglist li span{ display:block; line-height:30px; } 
 	</style>
 	<script type="text/javascript">
-	 $(function() {
-		    $( document ).tooltip({
-		      position: {
-		        my: "0 bottom-2",
-		        at: "0 top"    
-		      }
-		    });
-		  });
 	window.onload=function(){ 
 		var steamId=$("steamId").value;
 		var type=$("type").value;
@@ -49,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		{
 		    alert("没有数据!");
 		    return;
-		}　
+		}
 		var total=0;
 		var ul=document.getElementById("imglist");
 		if(ul){
@@ -58,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<data.length;i++){  
 	         addRow(data[i].iconBase64,data[i].name,data[i].price);   // 表格添加一行
 	         if(data[i].price){
-		         var price=data[i].price.replace(/[$]/, "").replace(/USD/,"");
+		         var price=data[i].price.replace(/[$]/, "").replace(/USD/,"").replace(/ /,"");
 		         total+=parseFloat(price);
 	         }
 	        }
