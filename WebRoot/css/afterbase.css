@@ -1,0 +1,167 @@
+.panel-heading {
+	padding: 10px 10px 5px 10px;
+}
+
+.trashPanel {
+	margin-top: 10px;
+}
+
+.itemList {
+	margin-bottom: 5px;
+}
+
+.itemList #left, .itemList #right {
+	min-height: 120px;
+}
+
+.itemList>.panel-body {
+	padding-top: 5px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+.tradeBody {
+	background: url("../img/arrow.png"/*tpa=http://www.dota2djsp.com/images/arrow.png*/) no-repeat 50% 50%;
+	background-size: 5%;
+	background-image: none\9;
+}
+
+.tradeDiv .panel-title {
+	font-size: 14px;
+}
+
+.tradeBody .leftArea {
+	padding-left: 2px;
+}
+
+.tradeBody .rightArea {
+	padding-right: 2px;
+}
+
+.panel-body {
+	padding: 5px;
+}
+
+.popoverxContext {
+	display: none;
+}
+
+.popoverxContext>div {
+	margin-bottom: 5px;
+}
+
+.pop_name {
+	font-size: 24px;
+}
+
+.pop_game_info>div {
+	float: left;
+}
+
+.pop_game_image {
+	min-height: 32px;
+}
+
+.pop_game_other {
+	margin-left: 5px;
+}
+
+.pop_game_other>div {
+	color: #767676;
+}
+
+.pop_game_list {
+	color: #b4b4b4;
+	clear: both;
+	font-size: 12px;
+	padding-right: 8px;
+}
+
+.navbar .nav>li .dropdown-menu {
+	margin: 0;
+}
+
+.navbar .nav>li:hover .dropdown-menu {
+	display: block;
+}
+
+.shopSmallImg {
+	width: 60px;
+}
+
+.shopMessage {
+	float: left;
+	width: 30px;
+}
+
+.catalogBtn {
+	width: 31%;
+	margin-bottom: 5px;
+}
+
+.catalogImg {
+	width: 22.5%;
+	margin-top: 2px;
+}
+
+.shopSubMenu {
+	margin-left: 20px;
+}
+
+.showBotMessage * {
+	color: black;
+	line-height: 30px;
+}
+
+#msgNum {
+	margin-left: 5px;
+	color: yellow;
+	font-weight: bold;
+}
+
+a.list-group-item {
+	color: white;
+	background-color: #1F1F1F;
+	border: 0;
+}
+
+.pagination>li>a, .pagination>li>span {
+	background-color: #1F1F1F;
+	color: white;
+	border: 1px solid gray;
+}
+
+.schemaBtn {
+	width: 15%;
+}
+
+.qqserver span {
+	color: black;
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand {
+	color: #FFFFEE;
+}
+
+.floatContainer {
+	position: static;
+}
+
+a:link, a:visited {
+	color: #EEE;
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+	text-decoration: underline;
+}
+
+a:active {
+	color: #ff3333;
+	text-decoration: none;
+}
+
+.operButton a {
+	float: right;
+}

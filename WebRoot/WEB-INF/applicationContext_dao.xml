@@ -7,5 +7,48 @@
 	<bean id="baseDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>	
-	<bean id="goodsDao" class="com.accp.myoa.dao.hibimpl.GoodsDaoImpl" parent="baseDao"></bean>
+	<bean id="usersDao" class="com.accp.myoa.dao.hibimpl.UsersDaoImpl"  parent="baseDao"></bean>
+	<bean id="goodsDao" class="com.accp.myoa.dao.hibimpl.GoodsDaoImpl" parent="baseDao">
+		<property name="threadPoolTaskExecutor" ref="taskExecutor"></property>
+	</bean>
+	<bean id="tmpDao" class="com.accp.myoa.dao.hibimpl.TmpDaoImpl" parent="baseDao">
+		<property name="threadPoolTaskExecutor" ref="taskExecutor"></property>
+	</bean>	
+    <bean id="clock" class="com.accp.myoa.task.UpdateImgAndPriceTask" >
+    	<property name="goodsDao" ref="goodsDao"></property>
+    	<property name="tmpDao" ref="tmpDao"></property>
+    </bean>  
+     <bean id="updateProxy" class="com.accp.myoa.task.UpdateProxy" />  
+     
+   
+     
+     <!-- 更新未取到的图片和价格信息 -->
+    <bean id="scheduledClock" class="org.springframework.scheduling.timer.ScheduledTimerTask">  
+        <property name="timerTask" ref="clock" />      
+        <property name="period">   
+            <value>60000</value>       
+        </property>      
+        <property name="delay">   
+            <value>5000</value>   
+        </property>   
+    </bean> 
+    
+    <!-- 采集代理ip --> 
+     <bean id="taskForProxyIP" class="org.springframework.scheduling.timer.ScheduledTimerTask">  
+        <property name="timerTask" ref="updateProxy" />      
+        <property name="period">   
+            <value>1800000</value>       
+        </property>      
+        <property name="delay">   
+            <value>100</value>   
+        </property>   
+    </bean>  
+    <!-- <bean class="org.springframework.scheduling.timer.TimerFactoryBean">   
+        <property name="scheduledTimerTasks">   
+            <list>   
+                <ref bean="scheduledClock" />  
+                <ref bean="taskForProxyIP" />
+            </list>   
+        </property>   
+    </bean>   -->
 </beans>

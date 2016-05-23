@@ -1,0 +1,118 @@
+* {
+	color: white;
+}
+
+
+body,#body,#body .container {
+	background-color: #1F1F1F;
+	font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+}
+
+.row {
+	padding-top: 10px;
+}
+
+#body .container .row {
+	background-color: black;
+}
+
+#top .navbar-inverse {
+	background-color: black;
+}
+
+#footer {
+	
+}
+
+.panel {
+	background-color: #1F1F1F;
+	border: 0;
+	margin-bottom: 5px;
+}
+
+.panel-default>.panel-heading {
+	background-color: #1F1F1F;
+	color: white;
+	border-bottom: 0;
+}
+
+.dropdown-menu {
+	background-color: black;
+	color: white;
+}
+
+.dropdown-menu>li>a {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.428571429;
+	color: #ebebeb;
+	white-space: nowrap;
+}
+
+.tradeDiv {
+	border: 1px solid #414141;
+}
+
+.itemList {
+	background-color: #333;
+	border: 1px solid #414141;
+}
+
+.form-control {
+	background-color: #171717;
+	color: #FFF;
+}
+
+.btn-default {
+	color: #fff;
+	background-color: #666;
+	border-color: black;
+}
+
+.bootstrap-dialog-message {
+	color: #000;
+}
+
+.popover-title {
+	background-color: #1F1F1F;
+	border-bottom: 0;
+}
+
+.popover {
+	background-color: #4C4C4C;
+	border: 1px solid #000;
+}
+
+.popover.bottom .arrow:after {
+	border-bottom-color: #4C4C4C;
+}
+
+.communityPrice {
+	color: yellow;
+	font-size: bold;
+}
+
+.datepicker.dropdown-menu {
+	background-color: #4C4C4C;
+}
+
+.datepicker table tr td.range,.datepicker table tr td.range:hover,.datepicker table tr td.range.disabled,.datepicker table tr td.range.disabled:hover
+	{
+	background: #B1B1B1;
+	border-radius: 0;
+}
+
+.noteClass {
+	color: yellow;
+}
+
+.spread{
+	color:yellow;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+  background-color: #1F1F1F;
+}

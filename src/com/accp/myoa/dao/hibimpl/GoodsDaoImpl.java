@@ -6,9 +6,10 @@ package com.accp.myoa.dao.hibimpl;
 
 import java.util.List;
 
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 import com.accp.myoa.dao.GoodsDao;
 import com.accp.myoa.entity.Goods;
-import com.accp.myoa.util.HttpUtil;
 
 /**
  * GoodsDaoImpl
@@ -16,6 +17,25 @@ import com.accp.myoa.util.HttpUtil;
  * @version $Id: GoodsDaoImpl.java, v 0.1 2016年4月17日 下午1:44:16 wanglei Exp $
  */
 public class GoodsDaoImpl extends BaseHibernateDao implements GoodsDao {
+
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
+    
+    public Object getResult(final String hql) {
+        return super.getResult(hql);
+    }
+    public int getCount(final String hql) {
+        return super.getCount(hql);
+    }
+
+    public void setThreadPoolTaskExecutor(ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+        this.threadPoolTaskExecutor = threadPoolTaskExecutor;
+    }
+    
+   public List<Goods> findByPage(String hql,int pageSize,int pageNum){
+       int firstResult=pageSize*(pageNum-1);
+       return super.findByPage(hql, firstResult, pageSize);
+   }
 
     /** 
      * @see com.accp.myoa.dao.GoodsDao#add(com.accp.myoa.entity.Goods)
@@ -61,32 +81,34 @@ public class GoodsDaoImpl extends BaseHibernateDao implements GoodsDao {
     public Goods get(int id) {
         return (Goods) getHibernateTemplate().get(Goods.class, id);
     }
-
     /** 
      * @see com.accp.myoa.dao.GoodsDao#fetchData(java.lang.String, java.lang.String)
      */
-    public List<Goods> fetchData(String steamId, String type) {
-        //逻辑是
-        //1、先判断数据库是否存在该steamID的数据,有的话直接取出来,没有的话需要从网上获取
-        String hql = "from Goods g where g.steamId=? and g.type=?";
-        String[] params = new String[] { steamId, type };
-        List<Goods> goodsList = super.getHibernateTemplate().find(hql, params);
-        if (goodsList.size() == 0) {//需要获取写到数据库并且返回
-            try {
-                goodsList = HttpUtil.fetchGoods(steamId, type);
-                if (goodsList.size() > 0) {
-                    super.getHibernateTemplate().saveOrUpdateAll(goodsList);
-                    return goodsList;
-                }
-                return null;
-                //否则写数据库且返回
-            } catch (Exception e) {
-                logger.error("", e);
-                return null;
-            }
-        } else {
-            return goodsList;
-        }
+    public String fetchData(String steamId, String type) {
+        return null;
     }
 
+  /** 
+     * @see com.accp.myoa.dao.GoodsDao#fetchData(java.lang.String, java.lang.String)
+     */
+   /* public String fetchData(String steamId, String type) {
+            if(steamId.trim().length()==0){
+                return "输入不合法";
+            }
+            try {
+               List<tmpGoods>  goodsList = HttpUtil.fetchGoods(steamId, type,threadPoolTaskExecutor);
+                if (goodsList.size() > 0) {                   
+                    super.getHibernateTemplate().saveOrUpdateAll(goodsList);
+                    hql = "from Goods g where g.steamId=? and g.type=? and tradable=?";
+                    params = new Object[] { steamId, type,1};
+                    List<Goods> list2 = super.getHibernateTemplate().find(hql, params);
+                    return "数据采集完毕";
+                }
+                return "没有数据";
+                //否则写数据库且返回
+            } catch (Exception e) {
+                return "出现异常,请刷新页面重试!";
+            }
+        } 
+     */
 }

@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/antlr-2.7.6rc1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/antlr.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-attrs.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-commons-2.2.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/asm-util-2.2.3.jar"/>
@@ -51,17 +50,10 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/portlet-api.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-api-1.5.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-agent.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-aop.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-beans.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-context.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-core.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-dao.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-hibernate3.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-jdbc.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-portlet.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-struts.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-tomcat-weaver.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-web.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sqljdbc.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/standard.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/struts.jar"/>
@@ -71,8 +63,24 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.30.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson-1.2.7.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson-1.2.7.jar" sourcepath="D:/mavenLibrary/com/alibaba/fastjson/1.2.7/fastjson-1.2.7-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/htmlunit-2.17-OSGi.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/htmlparser.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson-1.2.7-javadoc.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson-1.2.7-sources.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/openid4java-0.9.8.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-hibernate3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-context.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-core.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/aopalliance.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-aop.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-beans.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-jdbc.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-web.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

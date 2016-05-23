@@ -4,8 +4,8 @@
     "http://getahead.org/dwr/dwr20.dtd">
     <dwr>
     	<allow>
-    		<create creator="spring" javascript="GoodsService">
-    			<param name="beanName" value="goodsService"/>
+    		<create creator="spring" javascript="TmpService">
+    			<param name="beanName" value="tmpService"/>
     			<include method="fetchData"/>
     		</create> 
     		<convert converter="bean" match="com.accp.myoa.entity.*"/>  		

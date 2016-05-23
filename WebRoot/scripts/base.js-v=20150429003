@@ -1,0 +1,655 @@
+var $document = $(document);
+
+var url = window.location.href;
+if (window != parent)
+	parent.navigate(url);
+
+var browser = {
+	versions : function() {
+		var u = navigator.userAgent, app = navigator.appVersion;
+		return {
+			trident : u.indexOf('Trident') > -1, // IE内核
+			presto : u.indexOf('Presto') > -1, // opera内核
+			webKit : u.indexOf('AppleWebKit') > -1, // 苹果、谷歌内核
+			gecko : u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, // 火狐内核
+			mobile : !!u.match(/AppleWebKit.*Mobile.*/)
+					|| !!u.match(/AppleWebKit/), // 是否为移动终端
+			ios : !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), // ios终端
+			android : u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, // android终端或者uc浏览器
+			iPhone : u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, // 是否为iPhone或者QQHD浏览器
+			iPad : u.indexOf('iPad') > -1, // 是否iPad
+			webApp : u.indexOf('Safari') == -1
+		// 是否web应该程序，没有头部与底部
+		};
+	}()
+};
+
+var loading = "<div style='text-align:center;'><img src='"
+		+ "/img/gif/ajax-loader.gif'/>" + lang_loading + "</div>";
+var moneyRegex = /^[\d]+[\.]{0,1}[\d]{0,2}$/;
+
+$.fn.extend({
+	popoverx : function() {
+		var index = 0;
+		this.each(function() {
+			var $this = $(this);
+			$this.popover({
+				html : true,
+				trigger : 'hover',
+				placement : 'bottom',
+				container : false
+			});
+			index++;
+		});
+		return;
+	},
+	ajaxTodo : function() {
+		return this.each(function() {
+			var $this = $(this);
+			$this.click(function(event) {
+				var href = $this.attr("href");
+				var callback = $this.attr("callback");
+				var title = $this.attr("title");
+				var paramdata = $this.attr("paramdata");// 可选
+				// ，提交参数，函数名或者满足jquery
+				// ajax
+				// data数据的字符串。函数返回亦要求一样
+				var validate = $this.attr("validate");// 可选
+				// ，提交前验证，函数名，要求函数返回true
+				// 或者false
+				if (typeof window[validate] == 'function') {
+					var valRes = window[validate]();
+					if (!valRes) {
+						return false;
+					}
+				}
+				if (title) {
+					BootstrapDialog.confirm(lang_confirm_title, title,
+							function(result) {
+								if (result) {
+									ajaxTodo(href, callback, paramdata);
+								}
+							});
+				} else {
+					ajaxTodo(href, callback, paramdata);
+				}
+				event.preventDefault();
+			});
+		});
+	},
+	confirmLink : function() {
+		return this.each(function() {
+			var $this = $(this);
+			$this.click(function(event) {
+				var action = $this.attr("href");
+				var title = $this.attr("title");
+				if (title) {
+					BootstrapDialog.confirm(lang_confirm_title, title,
+							function(result) {
+								if (result) {
+									location.replace(action);
+								}
+							});
+				}
+				event.preventDefault();
+			});
+		});
+	},
+	dialog : function() {
+		return this.each(function() {
+			var $this = $(this);
+			$this.click(function(event) {
+				var title = $this.attr("title") || $this.text();
+				var href = $this.attr("href");
+				if (href) {
+					var dialogInstance = BootstrapDialog.show({
+						title : title,
+						message : $("<div class=\"showBotMessage\"><span>"
+								+ lang_loading + "</span></div>")
+					});
+					dialogInstance.open();
+					$.ajax({
+						type : 'POST',
+						url : href,
+						dataType : "text",
+						cache : false,
+						success : function(data) {
+							if (data == '301') {
+								window.location.href = "/login.do";
+							} else {
+								var mge = $(
+										"<div class=\"showBotMessage\"></div>")
+										.append(data);
+								init(mge);
+								$("a[type='close']", mge).each(function() {
+									$this_ = $(this);
+									$this_.click(function() {
+										dialogInstance.close();
+									});
+								});
+								dialogInstance.setMessage(mge);
+								// 初始化弹出层中的editor，在init()对BootstrapDialog弹出层的editor的初始化无法正常进行（原因未知）
+								$(".editor", mge).each(function() {
+									var $editor = $(this);
+									var id = $editor.attr("id");
+									createEditor(id);
+								});
+
+								dialogInstance.open();
+							}
+						},
+						error : function() {
+							dialogInstance.close();
+							console.log("The link is not avaiable:" + href);
+						}
+					});
+				}
+				event.preventDefault();
+			});
+		});
+	},
+	submitButton : function() {
+		return this.each(function() {
+			var $this = $(this);
+			$this.click(function(event) {
+				var action = $this.attr("href");
+				var title = $this.attr("title");
+				if (title) {
+					BootstrapDialog.confirm(lang_confirm_title, title,
+							function(result) {
+								if (result) {
+									$form = $this.parents("form");
+									if (action && action != "#"
+											&& action != "javascript:void(0)") {
+										$form.attr("action", action);
+									}
+									$form.submit();
+									$form[0].reset();
+								}
+							});
+				} else {
+					$form = $this.parents("form");
+					if (action && action != "#"
+							&& action != "javascript:void(0)") {
+						$form.attr("action", action);
+					}
+					$form.submit();
+					$form[0].reset();
+				}
+				event.preventDefault();
+			});
+		});
+	},
+	ajaxLoad : function() {
+		return this.each(function() {
+			var $this = $(this);
+			$this.click(function(event) {
+				var action = $this.attr("href");
+				var rel = $this.attr("rel");
+				ajaxLoad(rel, action);
+				event.preventDefault();
+			});
+		});
+	}
+});
+
+function ajaxTodo(url, callback, paramdata) {
+	var $callback = callback || pageCallback;
+	if (!$.isFunction($callback)) {
+		$callback = eval('(' + callback + ')');
+	}
+	var data = paramdata || {};
+	if (typeof window[paramdata] == 'function') {
+		data = window[paramdata]();
+	}
+	$.ajax({
+		type : 'POST',
+		url : url,
+		data : data,
+		dataType : "json",
+		cache : false,
+		success : $callback,
+		error : function() {
+			console.log("The link is not avaiable:" + url);
+		}
+	});
+}
+
+function ajaxLoad(elementid, url) {
+	if ($("#" + elementid).length == 0) {
+		return;
+	}
+	$("#" + elementid).html(loading);
+	url = url || $("#" + elementid).attr("url");
+	if (!url) {
+		alert("设置错误，请联系系统管理员!");
+		return;
+	}
+
+	if (url.indexOf("?") == -1) {
+		url += "?";
+	} else {
+		url += "&";
+	}
+
+	url += ("_=" + (new Date().getTime()));
+
+	// 加载参数
+	var formData = getCondition(elementid);
+
+	$.ajax({
+		type : 'POST',
+		url : url,
+		data : formData,
+		cache : false,
+		global : false,
+		success : function(data) {
+			if (data) {
+				if (data == '301') {
+					window.location.href = "/login.do";
+				}
+				$("#" + elementid).html(data);
+				if (lastUrl) {
+					$("#" + elementid).attr("url", lastUrl);
+				}
+				init($("#" + elementid));
+				initAjaxPaginator($("#" + elementid));
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("The link is not avaiable:" + url);
+		}
+	});
+}
+
+function validateCallback(form, callback) {
+	callback = callback || pageCallback;
+	if (!formCheck(form)) {
+		return false;
+	}
+	var $form = $(form);
+	var url = $form.attr("action");
+	$.ajax({
+		type : 'POST',
+		url : url,
+		dataType : "json",
+		data : $form.serializeArray(),
+		cache : false,
+		success : function(data) {
+			callback(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("The link is not avaiable:" + url);
+		}
+	});
+	return false;
+}
+
+function formCheck(form) {
+	var $form = $(form);
+	var bool = true;
+	$form.find("input").each(function() {
+		$this = $(this);
+		var dataType = $this.attr("dataType");
+		var value = $this.val();
+		if (dataType) {
+			if (dataType.substring(0, 1) == '#') {
+				var eid = dataType.substring(1);
+				var val = $("#" + eid, $form).val();
+				if (value != val) {
+					bool = false;
+				}
+			}
+			if (dataType == 'number') {
+				if (isNaN(value)) {
+					bool = false;
+				}
+			}
+		}
+	});
+	return bool;
+}
+
+function doSuccess(data) {
+	if (data.callbackType == 'disable') {
+		$("#" + data.ajaxid).attr("href", "#");
+		return;
+	} else if (data.callbackType == 'ajaxfresh') {
+		ajaxLoad(data.ajaxid);
+		return;
+	} else if (data.callbackType == 'hide') {
+		$("#" + data.ajaxid).hide();
+		return;
+	} else if (data.callbackType == 'close') {
+		window.close();
+		return;
+	}
+
+	if (data.forwardUrl) {
+		window.location.href = data.forwardUrl;
+	} else {
+		window.location.reload();
+	}
+}
+
+function pageCallback(data) {
+	if (data.statusCode == '200') {
+		if (data.message) {
+			var type = BootstrapDialog.TYPE_PRIMARY;
+			BootstrapDialog.show({
+				title : lang_default_title,
+				message : data.message,
+				type : type,
+				buttons : [ {
+					label : lang_close,
+					action : function(dialog) {
+						dialog.close();
+					}
+				} ],
+				onhide : function(dialogRef) {
+					doSuccess(data);
+				}
+			});
+		} else {
+			doSuccess(data);
+		}
+	} else if (data.statusCode == '301') {
+		window.location.href = "/login.do";
+	} else {
+		if (data.message) {
+			var type = BootstrapDialog.TYPE_WARNING;
+			BootstrapDialog.show({
+				title : lang_default_title,
+				message : data.message,
+				type : type,
+				buttons : [ {
+					label : lang_close,
+					action : function(dialog) {
+						dialog.close();
+					}
+				} ]
+			});
+		}
+	}
+}
+
+function ajaxCallback(data) {
+	if (data.statusCode == '200') {
+		ajaxLoad($("#" + data.ajaxid));
+	} else if (data.statusCode == '301') {
+		window.location.href = "/login.do";
+	} else {
+		var type = BootstrapDialog.TYPE_WARNING;
+		BootstrapDialog.show({
+			title : lang_default_title,
+			message : data.message || lang_error,
+			type : type,
+			buttons : [ {
+				label : lang_close,
+				action : function(dialog) {
+					dialog.close();
+				}
+			} ],
+			onhide : function(dialogRef) {
+				if (data.forwardUrl) {
+					window.location.href = data.forwardUrl;
+				}
+			}
+		});
+	}
+}
+
+function changePage(value) {
+	var action = $("#action").val();
+	if (action) {
+		if (action.indexOf("?") == -1) {
+			action += "?";
+		} else {
+			action += "&";
+		}
+		action += ("page=" + value);
+	}
+	window.location.href = action;
+}
+
+function init(document) {
+	var $tempdoc;
+	if (document) {
+		$tempdoc = $(document);
+	} else {
+		$tempdoc = $document;
+	}
+
+	$tempdoc.find("a[target='ajaxTodo']").unbind();
+	$tempdoc.find("a[target='navTab']").unbind();
+	$tempdoc.find("a[target='dialog']").unbind();
+	$tempdoc.find("a[target='submit']").unbind();
+	$tempdoc.find("a[target='submit']").unbind();
+	$tempdoc.find("a[target='ajaxLoad']").unbind();
+	$tempdoc.find("[rel='popoverx']").unbind();
+
+	$(".autoAjaxLoad", $tempdoc).each(function() {
+		ajaxLoad($(this).attr("id"));
+	});
+
+	$("a[target='ajaxTodo']", $tempdoc).ajaxTodo();
+	$("a[target='dialog']", $tempdoc).dialog();
+	$("a[target='submit']", $tempdoc).submitButton();
+	$("button[target='submit']", $tempdoc).submitButton();
+	$("a[target='ajaxLoad']", $tempdoc).ajaxLoad();
+	$("[rel='popoverx']", $tempdoc).popoverx();
+	$("[data-toggle='tab']").each(function() {
+		$(this).click(function() {
+			var id = $(this).attr("href").substring(1);
+			var isload = $(this).attr("load");
+			if (!isload) {
+				var url = $("#" + id).attr("url");
+				if (url) {
+					ajaxLoad(id, url);
+				}
+				$(this).attr("load", 1);
+			}
+		});
+	});
+	$(".popoverxContext", $tempdoc).each(function() {
+		var $this = $(this);
+		var html = $this.html();
+		var $box = $this.parent();
+		$box.popover({
+			html : true,
+			trigger : 'hover',
+			placement : 'bottom',
+			content : html,
+			container : false
+		});
+	});
+
+	$(".editor", $tempdoc).each(function() {
+		$this = $(this);
+		var id = $this.attr("id");
+		createEditor(id);
+	});
+
+	$(document).ajaxStart(showBlockUI).ajaxStop(jQuery.unblockUI);
+}
+
+function showBlockUI() {
+	jQuery.blockUI({
+		message : "<span><br>" + lang_processing + "<br><br></span>",
+		css : {
+			width : "250",
+			backgroundColor : "#7EC0EE",
+			border : "2px solid #104E8B"
+		}
+	});
+}
+
+$(function() {
+	init();
+	initPaginator();
+});
+
+function initPaginator() {
+	var url = $("#action").val();
+	if (!url) {
+		return;
+	}
+	if (url.indexOf("?") == -1) {
+		url += "?";
+	} else {
+		url += "&";
+	}
+	url = encodeURI(encodeURI(url));
+	var options = {
+		bootstrapMajorVersion : 3,
+		currentPage : $("#current").val(),
+		totalPages : $("#pages").val(),
+		numberOfPages : 10,
+		pageUrl : function(type, page, current) {
+			return url + ("page=" + page);
+		}
+	};
+
+	$("#pager").bootstrapPaginator(options);
+}
+
+function initAjaxPaginator(element) {
+	var $ul = $("#pager", element);
+	if (!$ul || $ul.length == 0) {
+		// 非分页页面
+		return;
+	}
+	var current = $ul.attr("current");
+	var pages = $ul.attr("pages");
+	var action = $ul.attr("action");
+	var showNum = $ul.attr("showNum");
+	if (!showNum) {
+		showNum = 5;
+	}
+	var options = {
+		bootstrapMajorVersion : 3,
+		currentPage : current,
+		totalPages : pages,
+		numberOfPages : showNum,
+		pageUrl : function(type, page, current) {
+			return "#";
+		},
+		onPageClicked : function(e, originalEvent, type, page) {
+			initCondition(element.attr("id"), "page", page);
+			element.attr("url", action);
+			ajaxLoad(element.attr("id"));
+		}
+	};
+
+	$ul.bootstrapPaginator(options);
+}
+
+function initCondition(elementid, name, value) {
+	var $parent = $("#" + elementid).parent();
+	var $element = $parent.find("#autoField_" + elementid);
+	if (!$element || $element.length == 0) {
+		// 元素不存在，自动添加一个form
+		$parent.append("<form id=\"autoField_" + elementid + "\"></form>");
+		$element = $parent.find("#autoField_" + elementid);
+	}
+	var input = $element.find("input[name='" + name + "']");
+	if (!input || input.length == 0) {
+		// 不存在的情况
+		$element.append("<input type=\"hidden\" name=\"" + name + "\" value=\""
+				+ value + "\"/>");
+	} else {
+		input.val(value);
+	}
+}
+
+function getCondition(elementid) {
+	return $("#autoField_" + elementid).serializeArray();
+}
+
+function freshCondition(elementid, element) {
+	var value = $(element).val();
+	var name = $(element).attr("name");
+	initCondition(elementid, name, value);
+	if (name != "page") {
+		initCondition(elementid, "page", 1);
+	}
+	ajaxLoad(elementid);
+}
+
+function parseMoneyInput(element) {
+	var value = $(element).val();
+	if (value) {
+		if (isNaN(value)) {
+			$(element).val("");
+		} else {
+			var result;
+			if (!value.match(moneyRegex)) {
+				value = Math.round(value * 100) / 100;
+				$(element).val(value);
+			}
+		}
+	}
+}
+
+jQuery(document).ready(function() {
+	jQuery(document).ajaxStart(jQuery.blockUI).ajaxStop(jQuery.unblockUI);
+	$(document).on('click', '#scroll-up', function() {
+		$('html, body').animate({
+			scrollTop : 0
+		}, 1000);
+	});
+
+	$(window).scroll(function() {
+		var $this = $(this);
+		if ($this.scrollTop() < 100) {
+			$('#scroll-up').fadeOut();
+		} else if ($('#scroll-up').is(':hidden')) {
+			$('#scroll-up').fadeIn();
+		}
+	});
+});
+
+var editorCount = 0;
+function createEditor(editorid) {
+	var neweditorid = editorid + editorCount;
+	var name = $("#" + editorid).attr("name");
+	$("#" + editorid).attr("id", neweditorid);
+	// 实例化编辑器
+	UM.getEditor(neweditorid, {
+		textarea : name
+	});
+	editorCount++;
+}
+
+// /////////////////////////////////////////////////////////////////
+
+var clipboard = new Clipboard('.btn_copyurl', {
+	text : function() {
+		return window.location.href;
+	}
+});
+
+clipboard.on('success', function(e) {
+	var type = BootstrapDialog.TYPE_PRIMARY;
+	BootstrapDialog.show({
+		title : lang_default_title,
+		message : location_href_copied,
+		type : type,
+		buttons : [ {
+			label : lang_close,
+			action : function(dialog) {
+				dialog.close();
+			}
+		} ],
+		onhide : function(dialogRef) {
+
+		}
+	});
+});
+
+clipboard.on('error', function(e) {
+	// alert(e);
+});
+
+// /////////////////////////////////////////////////////////////////
+

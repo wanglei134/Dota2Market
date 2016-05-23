@@ -12,7 +12,10 @@ public interface GoodsDao {
 	public List<Goods> loadList(Goods goods);
 	public Goods get(int id);
 	
-	public List<Goods> fetchData(String steamId,String type);
+	public String fetchData(String steamId,String type);
+    public List<Goods> findByPage(String hql,int pageSize,int pageNum);
+    public int getCount(final String hql) ;
+    public Object getResult(final String hql) ;
 	
 }
 

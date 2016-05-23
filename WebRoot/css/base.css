@@ -1,0 +1,292 @@
+@
+-ms-viewport {
+	width: device-width;
+}
+
+#scroll-up {
+	position: fixed;
+	left: 50%;
+	bottom: 32px;
+	margin-left: 555px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	cursor: pointer;
+	display: none;
+	background: #1a1a1a;
+	text-align: center;
+}
+.scroll-up-icon
+{
+	display: inline-block;
+	width: 16px;
+	height: 17px;
+	vertical-align: middle;
+	background: url("../img/pagespeed.png"/*tpa=http://www.dota2djsp.com/images/pagespeed.png*/) no-repeat -209px -38px;
+}
+
+#top {
+	height: 50px;
+}
+
+#body {
+	height: auto;
+}
+
+#footer {
+	height: 60px;
+}
+
+.container {
+	width: auto;
+	padding: 0 15px;
+}
+
+#body>.container>.row {
+	padding-top: 20px;
+}
+
+.container .text-muted {
+	margin: 20px 0;
+}
+
+#footer .container {
+	text-align: center;
+}
+
+.box {
+	-webkit-border-radius: 3px;
+	color: #DFDFDF;
+	border-radius: 3px;
+	background: #272727;
+	text-align: center;
+	margin: 5px 1%;
+	float: left;
+	min-width: 60px;
+	max-width: 99px;
+	width: 14.666%;
+	cursor: pointer;
+}
+
+.noneBox {
+	opacity: 0.5;
+	z-index: 1;
+	box-shadow: 0px 0px 1px 2px #D2D2D2;
+}
+
+.box1 {
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+.smallimg {
+	margin: 2px 2%;
+	width: 96%;
+}
+
+.box .rarity {
+	float: left;
+	font-size: 0.65em;
+	overflow: hidden;
+	position: relative;
+	margin-top: -1em;
+	font-size: 12px;
+	background: rgba(0, 0, 0, 0.75);
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	width: 100%;
+}
+
+.box .chest, .box .quantity {
+	float: left;
+	position: relative;
+	margin-top: -3.5em;
+	background: rgba(0, 0, 0, 0.75);
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	width: 20px;
+	font-size: 12px;
+}
+
+.box .showbc {
+	float: right;
+	position: relative;
+	margin-top: -4.7em;
+	background: rgba(0, 0, 0, 0.75);
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 12px;
+}
+
+.box .notradeable {
+	float: left;
+	overflow: hidden;
+	position: relative;
+	margin-top: -3em;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	width: 100%;
+	color: yellow;
+	font-weight: bold;
+}
+
+.box .qualityDiv {
+	position: absolute;
+	font-size: 0.9em;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background: #171717;
+	padding: 5px;
+	display: none;
+	z-index: 1020;
+}
+
+.moveLeft {
+	position: relative;
+	margin-top: -50%;
+	border-radius: 5px;
+	margin-left: -30%;
+	background: #171717;
+	padding: 5px;
+	width: 30%;
+	color: #8EC13E;
+	display: none;
+	z-index: 1021;
+}
+
+#right .box:hover .moveLeft, #right .box:hover .qualityDiv {
+	display: block;
+}
+
+/*浠ヤ笅涓哄搧璐ㄩ鑹插畾涔�*/
+.unique {
+	-webkit-box-shadow: 0px 0px 1px 2px #D2D2D2;
+	box-shadow: 0px 0px 1px 2px #D2D2D2;
+}
+
+.strange {
+	-webkit-box-shadow: 0px 0px 1px 2px #CF6A32;
+	box-shadow: 0px 0px 1px 2px #CF6A32;
+}
+
+.unusual {
+	-webkit-box-shadow: 0px 0px 1px 2px #8650AC;
+	box-shadow: 0px 0px 1px 2px #8650AC;
+}
+
+.vintage {
+	-webkit-box-shadow: 0px 0px 1px 2px #476291;
+	box-shadow: 0px 0px 1px 2px #476291;
+}
+
+.tournament {
+	-webkit-box-shadow: 0px 0px 1px 2px #8650AC;
+	box-shadow: 0px 0px 1px 2px #8650AC;
+}
+
+.haunted {
+	-webkit-box-shadow: 0px 0px 1px 2px #8650AC;
+	box-shadow: 0px 0px 1px 2px #8650AC;
+}
+
+.genuine {
+	-webkit-box-shadow: 0px 0px 1px 2px #4D7455;
+	box-shadow: 0px 0px 1px 2px #4D7455;
+}
+
+.favored {
+	-webkit-box-shadow: 0px 0px 1px 2px #FFFF00;
+	box-shadow: 0px 0px 1px 2px #FFFF00;
+}
+
+.ascendant {
+	-webkit-box-shadow: 0px 0px 1px 2px #EB4B4B;
+	box-shadow: 0px 0px 1px 2px #EB4B4B;
+}
+
+.autographed {
+	-webkit-box-shadow: 0px 0px 1px 2px #ADE55C;
+	box-shadow: 0px 0px 1px 2px #ADE55C;
+}
+
+.legacy {
+	-webkit-box-shadow: 0px 0px 1px 2px #FFFFFF;
+	box-shadow: 0px 0px 1px 2px #FFFFFF;
+}
+
+.exalted {
+	-webkit-box-shadow: 0px 0px 1px 2px #CCCCCC;
+	box-shadow: 0px 0px 1px 2px #CCCCCC;
+}
+
+.frozen {
+	-webkit-box-shadow: 0px 0px 1px 2px #4682B4;
+	box-shadow: 0px 0px 1px 2px #4682B4;
+}
+
+.corrupted {
+	-webkit-box-shadow: 0px 0px 1px 2px #A52A2A;
+	box-shadow: 0px 0px 1px 2px #A52A2A;
+}
+
+.lucky {
+	-webkit-box-shadow: 0px 0px 1px 2px #32CD32;
+	box-shadow: 0px 0px 1px 2px #32CD32;
+}
+
+.msgBox {
+	margin-bottom: 5px;
+	word-wrap: break-word;
+	width: 98%;
+	margin: 1px 1% 20px 1%;
+	border: none;
+	overflow-x: hidden;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: -1px -1px 1px #C5C5C5;
+}
+
+.disable {
+	opacity: 0.5;
+	z-index: 1;
+}
+
+.msgLeft {
+	margin: 0.75em 1%;
+	font-size: 1em;
+	width: 44%;
+}
+
+.msgLeft .title {
+	margin-bottom: 5px;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.msgRight {
+	float: right;
+	margin: 1em 1%;
+	width: 54%;
+}
+
+.showBotMessage #steamId a {
+	color: black;
+}
+
+.showBotMessage #pd {
+	color: red;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.subMenuLine a {
+	margin-left: 5px;
+}
+
+.win {
+	color: green;
+}
+
+.lock{
+	color:red;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-4-25 23:13:33 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.accp.myoa.entity.Tmp" table="tmp" catalog="dota2" optimistic-lock="version">
+        <id name="id" type="java.lang.String">
+            <column name="id" />
+            <generator class="uuid" />
+        </id>
+        <property name="classid" type="string">
+            <column name="classid" length="20" />
+        </property>
+        <property name="instanceid" type="string">
+            <column name="instanceid" length="20" />
+        </property>
+        <property name="steamId" type="string">
+            <column name="steamId" length="20" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="10" />
+        </property>
+        <property name="createtime" type="timestamp">
+            <column name="createtime" length="19" />
+        </property>
+        <property name="treadable" type="string">
+            <column name="treadable" length="2" />
+        </property>
+        <property name="price" type="string">
+            <column name="price" length="10" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="200" />
+        </property>
+         <property name="chineseName" type="string">
+            <column name="chineseName" length="200" />
+        </property>
+        <property name="descriptions" type="string" >   
+	 		 <column name="descriptions" length="500" />
+		</property> 
+		 <property name="desctype" type="string" >   
+	 		  <column name="desctype" length="100" />
+		</property>   
+    </class>
+</hibernate-mapping>

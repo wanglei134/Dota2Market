@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-4-17 16:46:20 by Hibernate Tools 4.3.1.Final -->
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-4-29 17:40:58 by Hibernate Tools 4.3.1.Final -->
 <hibernate-mapping>
     <class name="com.accp.myoa.entity.Goods" table="goods" catalog="dota2" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -18,25 +18,26 @@
                 <comment>&#201;&#204;&#198;&#183;&#188;&#219;&#184;&#241;</comment>
             </column>
         </property>
-        <property name="count" type="java.lang.Integer">
-            <column name="count">
-                <comment>&#191;&#226;&#180;&#230;&#202;&#253;&#193;&#191;</comment>
-            </column>
+        <property name="iconBase64" type="string">
+            <column name="icon_base64" length="500"/>
+        </property>
+        <property name="classid" type="string">
+            <column name="classid" length="20" />
+        </property>
+        <property name="imgurl" type="string">
+            <column name="imgurl" length="500" />
+        </property>
+        <property name="instanceId" type="string">
+            <column name="instanceId" length="20" />
         </property>
         <property name="type" type="string">
-            <column name="type" length="10">
-                <comment>
-                &#200;&#253;&#214;&#214;&#191;&#226;&#180;&#230;&#181;&#196;&#202;&#253;&#193;&#191;&#178;&#187;&#210;&#187;&#214;&#194;,&#202;&#199;&#210;&#187;&#184;&#246;&#178;&#206;&#202;&#253;</comment>
-            </column>
+            <column name="type" length="20" />
         </property>
-        <property name="steamId" type="string">
-            <column name="steamId" length="20">
-                <comment>
-                &#200;&#231;&#185;&#251;&#210;&#209;&#190;&#173;&#211;&#208;&#193;&#203;fetch&#181;&#196;&#202;&#177;&#186;&#242;&#190;&#205;&#178;&#187;&#208;&#194;&#212;&#246;&#214;&#177;&#189;&#211;&#196;&#195;&#191;&#226;&#180;&#230;</comment>
-            </column>
+        <property name="nameColor" type="string">
+            <column name="name_color" length="20" />
         </property>
-        <property name="iconBase64" type="string">
-            <column name="icon_base64" />
+        <property name="lastupdatetime" type="timestamp">
+            <column name="lastupdatetime" length="19" />
         </property>
     </class>
 </hibernate-mapping>

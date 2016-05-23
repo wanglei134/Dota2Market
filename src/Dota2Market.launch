@@ -15,7 +15,10 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Dota2Market"/>
 <stringAttribute key="org.hibernate.eclipse.launch.CFG_XML_FILE" value="\Dota2Market\src\hibernate.cfg.xml"/>
 <stringAttribute key="org.hibernate.eclipse.launch.CONFIGURATION_FACTORY" value="ANNOTATIONS"/>
-<listAttribute key="org.hibernate.eclipse.launch.FILE_MAPPINGS"/>
+<listAttribute key="org.hibernate.eclipse.launch.FILE_MAPPINGS">
+<listEntry value="/Dota2Market/src/com/accp/myoa/entity/Goods.hbm.xml"/>
+<listEntry value="/Dota2Market/src/com/accp/myoa/entity/Tmp.hbm.xml"/>
+</listAttribute>
 <stringAttribute key="org.hibernate.eclipse.launch.HIBERNATE_VERSION" value="4.3"/>
-<stringAttribute key="org.hibernate.eclipse.launchDIALECT" value="org.hibernate.dialect.MySQLDialect"/>
+<stringAttribute key="org.hibernate.eclipse.launchDIALECT" value="org.hibernate.dialect.MySQLMyISAMDialect"/>
 </launchConfiguration>

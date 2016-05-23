@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-2 2:18:28 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.accp.myoa.entity.Users" table="users" catalog="dota2" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="steamid" type="string">
+            <column name="steamid" length="100" />
+        </property>
+        <property name="communityvisibilitystate" type="string">
+            <column name="communityvisibilitystate" length="2" />
+        </property>
+        <property name="profilestate" type="string">
+            <column name="profilestate" length="2" />
+        </property>
+        <property name="personaname" type="string">
+            <column name="personaname" length="100" />
+        </property>
+        <property name="lastlogoff" type="string">
+            <column name="lastlogoff" length="100" />
+        </property>
+        <property name="profileurl" type="string">
+            <column name="profileurl" length="100" />
+        </property>
+        <property name="avatar" type="string">
+            <column name="avatar" length="500" />
+        </property>
+        <property name="avatarmedium" type="string">
+            <column name="avatarmedium" length="500" />
+        </property>
+        <property name="avatarfull" type="string">
+            <column name="avatarfull" length="500" />
+        </property>
+        <property name="personastate" type="string">
+            <column name="personastate" length="2" />
+        </property>
+        <property name="primaryclanid" type="string">
+            <column name="primaryclanid" length="100" />
+        </property>
+        <property name="timecreated" type="string">
+            <column name="timecreated" length="100" />
+        </property>
+        <property name="personastateflags" type="string">
+            <column name="personastateflags" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

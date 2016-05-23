@@ -8,4 +8,10 @@
 	<bean id="goodsService" class="com.accp.myoa.service.impl.GoodsServiceImpl">
 		<property name="goodsDao" ref="goodsDao"></property>
 	</bean>
+	<bean id="tmpService" class="com.accp.myoa.service.impl.TmpServiceImpl">
+		<property name="tmpDao" ref="tmpDao"></property>
+	</bean>
+	<bean id="usersService" class="com.accp.myoa.service.impl.UsersServiceImpl">
+		<property name="usersDao" ref="usersDao"/>
+	</bean>
 </beans>

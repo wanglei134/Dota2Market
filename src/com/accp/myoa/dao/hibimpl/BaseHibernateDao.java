@@ -72,4 +72,28 @@ public class BaseHibernateDao extends HibernateDaoSupport {
 		    }
 		);
 	}
+	
+	public Object getResult(final String hql) {
+        return (Object)getHibernateTemplate().execute(
+            new HibernateCallback() {
+                public Object doInHibernate(Session session)
+                        throws HibernateException, SQLException {
+                    Query query = session.createQuery(hql);
+                    return query.uniqueResult();
+                }
+            }
+        );
+    }
+	
+	public Object getPrice(final String hql) {
+        return (Object)getHibernateTemplate().execute(
+            new HibernateCallback() {
+                public Object doInHibernate(Session session)
+                        throws HibernateException, SQLException {
+                    Query query = session.createSQLQuery(hql);
+                    return query.uniqueResult();
+                }
+            }
+        );
+    }
 }

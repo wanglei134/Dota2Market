@@ -48,8 +48,29 @@ public class GoodsServiceImpl implements GoodsService {
     /** 
      * @see com.accp.myoa.service.GoodsService#fetchData(java.lang.String, java.lang.String)
      */
-    public List<Goods> fetchData(String steamId, String type) {
+    public String fetchData(String steamId, String type) {
         return goodsDao.fetchData(steamId, type);
+    }
+
+    /** 
+     * @see com.accp.myoa.service.GoodsService#findByPage(java.lang.String, int, int)
+     */
+    public List<Goods> findByPage(String hql, int pageSize, int pageNum) {
+        return goodsDao.findByPage(hql, pageSize, pageNum);
+    }
+
+    /** 
+     * @see com.accp.myoa.service.GoodsService#getCount(java.lang.String)
+     */
+    public int getCount(String hql) {
+        return goodsDao.getCount(hql);
+    }
+
+    /** 
+     * @see com.accp.myoa.service.GoodsService#getResult(java.lang.String)
+     */
+    public Object getResult(String hql) {
+        return goodsDao.getResult(hql);
     }
 
 }

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-
+	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd 
+	http://www.springframework.org/schema/tx  
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 	
-	<bean id="dateSourse"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver">
-		</property>
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/dota2">
-		</property>
-		<property name="username" value="root"></property>
-		<property name="password" value="123456"></property>
+	
+	<bean id="dateSourse" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/dota2?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="dota2_market_134"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="minPoolSize" value="10"></property>
+		<property name="maxPoolSize" value="150"></property>
+		<property name="numHelperThreads" value="10"></property>
+		<property name="acquireIncrement" value="3"></property>			
+		<property name="maxStatementsPerConnection" value="5"></property>	
+		<property name="maxIdleTime" value="3800"></property>  
+		<property name="maxStatements" value="0"/>  
+		<property name="checkoutTimeout" value="1000"/> 
 	</bean>
+	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource">
@@ -25,12 +37,28 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
-		</property>
+		</property> 
 		<property name="mappingResources">
 			<list>					
-				<value>com/accp/myoa/entity/Goods.hbm.xml</value>			
+				<value>com/accp/myoa/entity/Goods.hbm.xml</value>	
+				<value>com/accp/myoa/entity/Tmp.hbm.xml</value>	
+				<value>com/accp/myoa/entity/Users.hbm.xml</value>
+				<value>com/accp/myoa/entity/Userinfo.hbm.xml</value>				
 			</list>
 		</property>
-	</bean></beans>
+	</bean>
+	
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <!-- 核心线程数 -->	 
+   	 <property name="corePoolSize" value="20" />
+    <!-- 最大线程数 -->  
+   	 <property name="maxPoolSize" value="200" />
+    <!-- 队列最大长度 -->
+  	  <property name="queueCapacity" value="6000" />
+    <!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+   	 <property name="keepAliveSeconds" value="60" />
+	</bean>
+</beans>
