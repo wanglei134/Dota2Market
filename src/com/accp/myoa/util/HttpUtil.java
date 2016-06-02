@@ -27,6 +27,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.accp.myoa.entity.Goods;
 import com.accp.myoa.entity.Tmp;
+import com.accp.myoa.entity.TradeGoods;
 import com.accp.myoa.task.UpdateProxy;
 import com.accp.myoa.web.action.GoodsAction;
 import com.alibaba.fastjson.JSON;
@@ -59,9 +60,7 @@ public class HttpUtil {
     private static ThreadLocal<List<Tmp>>                 threadtmpList;
     private static ThreadLocal<CopyOnWriteArrayList<Tmp>> threadmyList;
 
-    public static void main(String[] args) throws Exception {
-        setProxy();
-    }
+   
 
     /**
      * 判断字符串是否是数字
@@ -77,7 +76,58 @@ public class HttpUtil {
         }
         return true;
     }
-
+    
+    public static void main(String[] args) throws Exception {
+        //fetchTradeInfo("1265618961", "", "", "");
+        List obj=(List) JSON.parse("[{\"classid\":\"1507008232\",\"amount\":\"1\"},{\"classid\":\"959992890\",\"amount\":\"1\"}]");
+        for(int i=0;i<obj.size();i++){
+            Map m=(Map) obj.get(i);
+            System.out.println(m.get("amount"));
+        }
+        System.out.println(obj);
+        
+    }
+    public static List<TradeGoods> fetchTradeInfo(String tradeOfferId,String steamId,String type,String botIndex) throws Exception{
+        String url="http://api.steampowered.com/IEconService/GetTradeOffer/v1/?key=7179C3828113D400D1B6BA9B1CF852F3&tradeofferid="+tradeOfferId+"&language=en_us";
+      //这个文件改造成先读取到本地文本,再读出来处理的方式
+        //1、文件读到本地
+        List<TradeGoods> goods=new ArrayList<TradeGoods>();
+        String fname = "d://" + tradeOfferId + (new Random().nextFloat()) + ".txt";
+        DownHttpUtil.downloadFile(fname, url);             
+        String jsondata = DownHttpUtil.readString3(fname);
+        JSONObject jsonObj;
+        try {
+            jsonObj = JSONObject.parseObject(jsondata);          
+        } catch (Exception e) {
+            return null;
+        }
+        Object jsonArray = jsonObj.get("response");
+        JSONObject offerObj=JSONObject.parseObject(jsonArray.toString());
+        Object offer=offerObj.get("offer");
+        JSONObject receiveObj=JSONObject.parseObject(offer.toString());
+        String jsonTradeOfferId=receiveObj.getString("tradeofferid");
+        String jsontrade_offer_state=receiveObj.getString("trade_offer_state");
+        Object items_to_receive = receiveObj.get("items_to_receive");
+        List obj=(List) items_to_receive;
+        for(int i=0;i<obj.size();i++){
+            TradeGoods g=new TradeGoods();
+            Map m=(Map) obj.get(i);
+            String assetid=(String) m.get("assetid");
+            String classid=(String) m.get("classid");
+            String instanceid=(String) m.get("instanceid");
+            g.setOldassestid(assetid);
+            g.setClassid(classid);
+            g.setInstanceid(instanceid);
+            g.setTradestate(jsontrade_offer_state);
+            g.setTradeOfferId(jsonTradeOfferId);
+            g.setSteamid(steamId);
+            g.setType(type);
+            g.setBotIndex(botIndex);
+            g.setTradeTime(new Date());
+            goods.add(g);
+        }
+        return goods;
+    }
     public static List<Tmp> fetchTmp(String streamId, String type,
                                      ThreadPoolTaskExecutor threadPoolTaskExecutor,                            
                                      HibernateTemplate hirbernate, int more,int xx) throws Exception {
@@ -145,6 +195,7 @@ public class HttpUtil {
                 tmp.setSteamId(streamId);
                 tmp.setType(type);
                 tmp.setCreatetime(new Date());
+                tmp.setAssesstid(v.getString("id"));
                 tmpList.add(tmp);
                 tmp=null;
             }
@@ -336,6 +387,9 @@ class muSunTask implements Runnable {
         String desctype=v.getString("type");
         //中文名获取
         String chineseName = v.getString("market_name");
+        //单引号过滤
+        chineseName=chineseName.replaceAll("'", "");
+        chineseName=chineseName.replaceAll("‘", "");
         //特殊html标签过滤
         int j=chineseName.indexOf(">");
         if(j!=-1)
@@ -363,7 +417,11 @@ class muSunTask implements Runnable {
             if (tmp2.getClassid().equals(classId) && tmp2.getInstanceid().equals(instanceId)) {
                 tmp2.setName(market_hash_name);
                 tmp2.setChineseName(chineseName);
-                tmp2.setDescriptions(desArray);
+                if(EncodeParse.checkSupportUTF8(desArray)){
+                    tmp2.setDescriptions(desArray);
+                }else{
+                    tmp2.setDescriptions("不支持的字符描述");
+                }                
                 tmp2.setDesctype(desctype);
 
             }

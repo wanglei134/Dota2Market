@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.accp.myoa.entity.Users;
@@ -22,12 +23,92 @@ import com.alibaba.fastjson.TypeReference;
  * @author wanglei
  * @version $Id: GetUsersInfo.java, v 0.1 2016年5月2日 上午1:32:32 wanglei Exp $
  */
+class json{
+    response response;
+    /**
+     * Setter method for property <tt>response</tt>.
+     * 
+     * @param response value to be assigned to property response
+     */
+    public void setResponse(response response) {
+        this.response = response;
+    }
+    /**
+     * Getter method for property <tt>response</tt>.
+     * 
+     * @return property value of response
+     */
+    public response getResponse() {
+        return response;
+    }
+}
+class response{
+    private List<players> players;
+    /**
+     * Setter method for property <tt>players</tt>.
+     * 
+     * @param players value to be assigned to property players
+     */
+    public void setPlayers(List<players> players) {
+        this.players = players;
+    }
+    /**
+     * Getter method for property <tt>players</tt>.
+     * 
+     * @return property value of players
+     */
+    public List<players> getPlayers() {
+        return players;
+    }
+}
+class players{
+    private String steamid;
+    /**
+     * Setter method for property <tt>steamid</tt>.
+     * 
+     * @param steamid value to be assigned to property steamid
+     */
+    public void setSteamid(String steamid) {
+        this.steamid = steamid;
+    }
+    /**
+     * Getter method for property <tt>steamid</tt>.
+     * 
+     * @return property value of steamid
+     */
+    public String getSteamid() {
+        return steamid;
+    }
+}
 public class GetUsersInfo {
 
     public static void main(String[] args) {
-        getInfo("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=7179C3828113D400D1B6BA9B1CF852F3&steamids=76561198070801085");
+       //getInfo("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=7179C3828113D400D1B6BA9B1CF852F3&steamids=76561198070801085");
+        String j="{\"response\":{\"players\":[{\"steamid\":\"p2\"},{\"steamid\":\"p1\"}]}}";
+        json x= (json) JSON.parseObject(j, json.class);
+        x.getResponse().getPlayers();
+        System.out.println(x);
+        
+        /*players p1=new players();
+        p1.setSteamid("p1");
+        players p2=new players();
+        p2.setSteamid("p2");
+        
+        List<players> pls=new ArrayList<>();
+        pls.add(p2);
+        pls.add(p1);
+        
+        response r=new response();
+        r.setPlayers(pls);
+        
+        json j=new json();
+        j.setResponse(r);
+        
+        String jsonString2 = JSON.toJSONString(j);  
+        
+        System.out.println(jsonString2);*/
     }
-    public static Users getInfo(String url){
+        public static Users getInfo(String url){
         Users u=new Users();
         try {
             String jsonStr=getJsonContent(url);

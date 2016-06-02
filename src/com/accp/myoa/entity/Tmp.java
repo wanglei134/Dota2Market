@@ -21,6 +21,40 @@ public class Tmp implements java.io.Serializable {
     private String name;
     private String chineseName;
     private String descriptions;
+    private String assesstid;
+    private int version;
+    /**
+     * Setter method for property <tt>version</tt>.
+     * 
+     * @param version value to be assigned to property version
+     */
+    public void setVersion(int version) {
+        this.version = version;
+    }
+    /**
+     * Getter method for property <tt>version</tt>.
+     * 
+     * @return property value of version
+     */
+    public int getVersion() {
+        return version;
+    }
+    /**
+     * Setter method for property <tt>assesstid</tt>.
+     * 
+     * @param assesstid value to be assigned to property assesstid
+     */
+    public void setAssesstid(String assesstid) {
+        this.assesstid = assesstid;
+    }
+    /**
+     * Getter method for property <tt>assesstid</tt>.
+     * 
+     * @return property value of assesstid
+     */
+    public String getAssesstid() {
+        return assesstid;
+    }
     /**
      * 描述物品种类
      */

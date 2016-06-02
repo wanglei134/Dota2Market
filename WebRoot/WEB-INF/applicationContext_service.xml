@@ -14,4 +14,22 @@
 	<bean id="usersService" class="com.accp.myoa.service.impl.UsersServiceImpl">
 		<property name="usersDao" ref="usersDao"/>
 	</bean>
+	<bean id="tradeGoodsService" class="com.accp.myoa.service.impl.TradeGoodsServiceImpl">
+		<property name="tradeGoodsDao" ref="tradeGoodsDao"></property>
+	</bean>
+	<bean id="cardsService" class="com.accp.myoa.service.impl.CardsServiceImpl">
+		<property name="cardsDao" ref="cardsDao"></property>
+	</bean>
+	<bean id="singleCardInfoService" class="com.accp.myoa.service.impl.SingleCardInfoServiceImpl">
+		<property name="singleCardInfoDao" ref="singleCardInfoDao"></property>
+	</bean>
+	<bean id="tradeLogService" class="com.accp.myoa.service.impl.TradeLogServiceImpl">
+		<property name="tradeLogDao" ref="tradeLogDao"></property>
+	</bean>
+	<bean id="rechargeService" class="com.accp.myoa.service.impl.RechargeServiceImpl">
+		<property name="rechargeDao" ref="rechargeDao"></property>
+	</bean>
+	<bean id="cardPriceService" class="com.accp.myoa.service.impl.CardPriceServiceImpl">
+		<property name="cardPriceDao" ref="cardPriceDao"></property>
+	</bean>
 </beans>

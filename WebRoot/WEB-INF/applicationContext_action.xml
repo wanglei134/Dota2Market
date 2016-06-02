@@ -8,5 +8,25 @@
 		<property name="goodsService" ref="goodsService"></property>
 		<property name="tmpService" ref="tmpService"></property>
 		<property name="usersService" ref="usersService"></property>
+		<property name="tradeGoodsService" ref="tradeGoodsService"></property>
+	</bean>	
+	<bean name="/user" class="com.accp.myoa.web.action.UserAction">		
+		<property name="usersService" ref="usersService"></property>
+		<property name="rechargeService" ref="rechargeService"></property>
+		<property name="tradeLogService" ref="tradeLogService"></property>
+	</bean>
+	<bean name="/trade" class="com.accp.myoa.web.action.TradeAction">		
+		<property name="usersService" ref="usersService"></property>
+		<property name="cardsService" ref="cardsService"></property>
+		<property name="singleCardInfoService" ref="singleCardInfoService"></property>
+		<property name="tradeLogService" ref="tradeLogService"></property>
+	</bean>
+	
+	<bean name="/admin" class="com.accp.myoa.web.action.AdminAction">		
+		<property name="usersService" ref="usersService"></property>
+		<property name="cardPriceService" ref="cardPriceService"></property>
+		<property name="tradeLogService" ref="tradeLogService"></property>
+		<property name="cardsService" ref="cardsService"></property>
+		<property name="singleCardInfoService" ref="singleCardInfoService"></property>
 	</bean>
 </beans>

@@ -179,7 +179,7 @@ public class TmpDaoImpl extends BaseHibernateDao implements TmpDao {
             //查之前同步删除数据
             Thread.sleep(500);
             deltmp();
-            //3分钟内有数据直接返回
+            //九分钟内有数据直接返回
             long begintime = System.currentTimeMillis();
             String hql = "from Tmp where steamId='" + steamId + "' and type=" + type
                          + " and TIMESTAMPDIFF(MINUTE,createtime,NOW())<180";

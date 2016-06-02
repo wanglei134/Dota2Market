@@ -10,20 +10,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>anonymous complex typeï¿½ï¿½ Java ï¿½à¡£
+ * <p>anonymous complex typeµÄ Java Àà¡£
  * 
- * <p>ï¿½ï¿½ï¿½ï¿½Ä£Ê½Æ¬ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½
+ * <p>ÒÔÏÂÄ£Ê½Æ¬¶ÎÖ¸¶¨°üº¬ÔÚ´ËÀàÖÐµÄÔ¤ÆÚÄÚÈÝ¡£
  * 
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="appid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="contextid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="assestid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="randomstr" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="command" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="jsonData" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,144 +31,63 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "appid",
-    "contextid",
-    "assestid",
-    "token",
-    "randomstr"
+    "command",
+    "jsonData"
 })
 @XmlRootElement(name = "acceptOffer")
 public class AcceptOffer {
 
-    @XmlElementRef(name = "appid", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> appid;
-    @XmlElementRef(name = "contextid", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> contextid;
-    @XmlElementRef(name = "assestid", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> assestid;
-    @XmlElementRef(name = "token", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> token;
-    @XmlElementRef(name = "randomstr", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
-    protected JAXBElement<String> randomstr;
+    @XmlElementRef(name = "command", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
+    protected JAXBElement<String> command;
+    @XmlElementRef(name = "jsonData", namespace = "http://dota2chukucun.com/", type = JAXBElement.class, required = false)
+    protected JAXBElement<String> jsonData;
 
     /**
-     * ï¿½ï¿½È¡appidï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
+     * »ñÈ¡commandÊôÐÔµÄÖµ¡£
      * 
      * @return
      *     possible object is
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public JAXBElement<String> getAppid() {
-        return appid;
+    public JAXBElement<String> getCommand() {
+        return command;
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½appidï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
+     * ÉèÖÃcommandÊôÐÔµÄÖµ¡£
      * 
      * @param value
      *     allowed object is
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public void setAppid(JAXBElement<String> value) {
-        this.appid = value;
+    public void setCommand(JAXBElement<String> value) {
+        this.command = value;
     }
 
     /**
-     * ï¿½ï¿½È¡contextidï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
+     * »ñÈ¡jsonDataÊôÐÔµÄÖµ¡£
      * 
      * @return
      *     possible object is
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public JAXBElement<String> getContextid() {
-        return contextid;
+    public JAXBElement<String> getJsonData() {
+        return jsonData;
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½contextidï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
+     * ÉèÖÃjsonDataÊôÐÔµÄÖµ¡£
      * 
      * @param value
      *     allowed object is
      *     {@link JAXBElement }{@code <}{@link String }{@code >}
      *     
      */
-    public void setContextid(JAXBElement<String> value) {
-        this.contextid = value;
-    }
-
-    /**
-     * ï¿½ï¿½È¡assestidï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public JAXBElement<String> getAssestid() {
-        return assestid;
-    }
-
-    /**
-     * ï¿½ï¿½ï¿½ï¿½assestidï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public void setAssestid(JAXBElement<String> value) {
-        this.assestid = value;
-    }
-
-    /**
-     * ï¿½ï¿½È¡tokenï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public JAXBElement<String> getToken() {
-        return token;
-    }
-
-    /**
-     * ï¿½ï¿½ï¿½ï¿½tokenï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public void setToken(JAXBElement<String> value) {
-        this.token = value;
-    }
-
-    /**
-     * ï¿½ï¿½È¡randomstrï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public JAXBElement<String> getRandomstr() {
-        return randomstr;
-    }
-
-    /**
-     * ï¿½ï¿½ï¿½ï¿½randomstrï¿½ï¿½ï¿½Ôµï¿½Öµï¿½ï¿½
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
-    public void setRandomstr(JAXBElement<String> value) {
-        this.randomstr = value;
+    public void setJsonData(JAXBElement<String> value) {
+        this.jsonData = value;
     }
 
 }

@@ -3,7 +3,6 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-
 	<bean id="baseDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>	
@@ -12,6 +11,14 @@
 		<property name="threadPoolTaskExecutor" ref="taskExecutor"></property>
 	</bean>
 	<bean id="tmpDao" class="com.accp.myoa.dao.hibimpl.TmpDaoImpl" parent="baseDao">
+		<property name="threadPoolTaskExecutor" ref="taskExecutor"></property>
+	</bean>	
+	<bean id="cardsDao" class="com.accp.myoa.dao.hibimpl.CardsDaoImpl"  parent="baseDao"></bean>
+	<bean id="singleCardInfoDao" class="com.accp.myoa.dao.hibimpl.SingleCardInfoDaoImpl"  parent="baseDao"></bean>
+	<bean id="tradeLogDao" class="com.accp.myoa.dao.hibimpl.TradeLogDaoImpl"  parent="baseDao"></bean>
+	<bean id="rechargeDao" class="com.accp.myoa.dao.hibimpl.RechargeDaoImpl"  parent="baseDao"></bean>
+	<bean id="cardPriceDao" class="com.accp.myoa.dao.hibimpl.CardPriceDaoImpl"  parent="baseDao"></bean>
+	<bean id="tradeGoodsDao" class="com.accp.myoa.dao.hibimpl.TradeGoodsDaoImpl" parent="baseDao">
 		<property name="threadPoolTaskExecutor" ref="taskExecutor"></property>
 	</bean>	
     <bean id="clock" class="com.accp.myoa.task.UpdateImgAndPriceTask" >

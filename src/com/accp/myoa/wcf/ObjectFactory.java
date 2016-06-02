@@ -3,7 +3,6 @@ package com.accp.myoa.wcf;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
@@ -15,7 +14,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the a package. 
+ * generated in the com.accp.myoa.wcf package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -50,15 +49,12 @@ public class ObjectFactory {
     private final static QName _QName_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "QName");
     private final static QName _AnyType_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "anyType");
     private final static QName _String_QNAME = new QName("http://schemas.microsoft.com/2003/10/Serialization/", "string");
-    private final static QName _AcceptOfferAppid_QNAME = new QName("http://dota2chukucun.com/", "appid");
-    private final static QName _AcceptOfferRandomstr_QNAME = new QName("http://dota2chukucun.com/", "randomstr");
-    private final static QName _AcceptOfferAssestid_QNAME = new QName("http://dota2chukucun.com/", "assestid");
-    private final static QName _AcceptOfferToken_QNAME = new QName("http://dota2chukucun.com/", "token");
-    private final static QName _AcceptOfferContextid_QNAME = new QName("http://dota2chukucun.com/", "contextid");
     private final static QName _AcceptOfferResponseAcceptOfferResult_QNAME = new QName("http://dota2chukucun.com/", "acceptOfferResult");
+    private final static QName _AcceptOfferJsonData_QNAME = new QName("http://dota2chukucun.com/", "jsonData");
+    private final static QName _AcceptOfferCommand_QNAME = new QName("http://dota2chukucun.com/", "command");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: a
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.accp.myoa.wcf
      * 
      */
     public ObjectFactory() {
@@ -273,54 +269,27 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "appid", scope = AcceptOffer.class)
-    public JAXBElement<String> createAcceptOfferAppid(String value) {
-        return new JAXBElement<String>(_AcceptOfferAppid_QNAME, String.class, AcceptOffer.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "randomstr", scope = AcceptOffer.class)
-    public JAXBElement<String> createAcceptOfferRandomstr(String value) {
-        return new JAXBElement<String>(_AcceptOfferRandomstr_QNAME, String.class, AcceptOffer.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "assestid", scope = AcceptOffer.class)
-    public JAXBElement<String> createAcceptOfferAssestid(String value) {
-        return new JAXBElement<String>(_AcceptOfferAssestid_QNAME, String.class, AcceptOffer.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "token", scope = AcceptOffer.class)
-    public JAXBElement<String> createAcceptOfferToken(String value) {
-        return new JAXBElement<String>(_AcceptOfferToken_QNAME, String.class, AcceptOffer.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "contextid", scope = AcceptOffer.class)
-    public JAXBElement<String> createAcceptOfferContextid(String value) {
-        return new JAXBElement<String>(_AcceptOfferContextid_QNAME, String.class, AcceptOffer.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
     @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "acceptOfferResult", scope = AcceptOfferResponse.class)
     public JAXBElement<String> createAcceptOfferResponseAcceptOfferResult(String value) {
         return new JAXBElement<String>(_AcceptOfferResponseAcceptOfferResult_QNAME, String.class, AcceptOfferResponse.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "jsonData", scope = AcceptOffer.class)
+    public JAXBElement<String> createAcceptOfferJsonData(String value) {
+        return new JAXBElement<String>(_AcceptOfferJsonData_QNAME, String.class, AcceptOffer.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://dota2chukucun.com/", name = "command", scope = AcceptOffer.class)
+    public JAXBElement<String> createAcceptOfferCommand(String value) {
+        return new JAXBElement<String>(_AcceptOfferCommand_QNAME, String.class, AcceptOffer.class, value);
     }
 
 }

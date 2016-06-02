@@ -8,6 +8,8 @@
             <column name="id" />
             <generator class="uuid" />
         </id>
+        <!--version标签用于指定表示版本号的字段信息-->  
+        <version name="version" column="version" type="int"> </version>
         <property name="classid" type="string">
             <column name="classid" length="20" />
         </property>
@@ -40,6 +42,9 @@
 		</property> 
 		 <property name="desctype" type="string" >   
 	 		  <column name="desctype" length="100" />
-		</property>   
+		</property> 
+		<property name="assesstid" type="string" >   
+	 		  <column name="assesstid" length="100" />
+		</property>    
     </class>
 </hibernate-mapping>

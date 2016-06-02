@@ -2,6 +2,7 @@ package com.accp.myoa.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -324,9 +325,9 @@ public class DownHttpUtil {
             client = new DefaultHttpClient();
             // 获得HttpGet对象
             HttpGet httpGet = getHttpGet(url, null, null);
-            
+
             //设置头文件信息
-           /* httpGet.setHeader("Host","steamcommunity.com");  
+            /* httpGet.setHeader("Host","steamcommunity.com");  
             httpGet.setHeader("Connection","keep-alive");  
             httpGet.setHeader("Cache-Control","max-age=0");  
             httpGet.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*;q=0.8");  
@@ -335,9 +336,8 @@ public class DownHttpUtil {
             httpGet.setHeader("DNT","1");
             httpGet.setHeader("Accept-Encoding","gzip, deflate, sdch");
             httpGet.setHeader("Accept-Language","zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4");*/
-            httpGet.setHeader("Cookie","Steam_Language=schinese;");
-            
-            
+            httpGet.setHeader("Cookie", "Steam_Language=schinese;");
+
             // 发送请求获得返回结果
             HttpResponse response = client.execute(httpGet);
             // 如果成功
@@ -394,11 +394,33 @@ public class DownHttpUtil {
         }
     }
 
-    public static StringBuilder readFileByLine(int bufSize, FileChannel fcin, ByteBuffer rBuffer, ByteBuffer wBuffer) {
+    public static String readString3(String FILE_IN)
+    {
+        String str = "";
+        File file = new File(FILE_IN);
+        try {
+            FileInputStream in = new FileInputStream(file);
+            // size  为字串的长度 ，这里一次性读完
+            int size = in.available();
+            byte[] buffer = new byte[size];
+            in.read(buffer);
+            in.close();
+            str = new String(buffer, "GB2312");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block           
+            e.printStackTrace();
+            return null;
+        }
+        return str;
+
+    }
+
+    public static StringBuilder readFileByLine(int bufSize, FileChannel fcin, ByteBuffer rBuffer,
+                                               ByteBuffer wBuffer) {
         String enterStr = "\n";
         StringBuilder strBuf = new StringBuilder("");
         try {
-            byte[] bs = new byte[bufSize];           
+            byte[] bs = new byte[bufSize];
             String tempString = null;
             while (fcin.read(rBuffer) != -1) {
                 int rSize = rBuffer.position();
@@ -428,7 +450,6 @@ public class DownHttpUtil {
             return null;
         }
     }
-
 
     public static void main(String[] args) throws IOException {
         // String result = getUrlAsString("http://www.gewara.com/");

@@ -15,10 +15,12 @@ public class EncodeParse {
     
     public static void main(String[] args) {
         try { 
-            String str="\u8bf7\u70b9\u51fb\u9a8c\u8bc1\u7801\u5b8c\u6210\u53d1\u8d34";
+            /*String str="\u8bf7\u70b9\u51fb\u9a8c\u8bc1\u7801\u5b8c\u6210\u53d1\u8d34";
             System.out.println(changeCharset(str, "utf-8"));
-            System.out.println(checkSupportUTF8("\\xF0\\xA1\\x8B\\xBE\\xE5\\xA2"));
-        } catch (UnsupportedEncodingException e) {
+            System.out.println(checkSupportUTF8("\\xF0\\xA1\\x8B\\xBE\\xE5\\xA2"));*/
+            String x="https://steamcommunity.com/tradeoffer/new/?partner=110535357&token=CAo0foYB".split("token")[1].split("=")[1];
+            System.out.println(x);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

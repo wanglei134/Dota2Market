@@ -25,28 +25,19 @@ public interface TradeService {
 
     /**
      * 
-     * @param assestid
-     * @param randomstr
-     * @param appid
-     * @param contextid
-     * @param token
+     * @param jsonData
+     * @param command
      * @return
      *     returns java.lang.String
      */
     @WebMethod(action = "http://dota2chukucun.com/TradeService/acceptOffer")
     @WebResult(name = "acceptOfferResult", targetNamespace = "http://dota2chukucun.com/")
-    @RequestWrapper(localName = "acceptOffer", targetNamespace = "http://dota2chukucun.com/", className = "a.AcceptOffer")
-    @ResponseWrapper(localName = "acceptOfferResponse", targetNamespace = "http://dota2chukucun.com/", className = "a.AcceptOfferResponse")
+    @RequestWrapper(localName = "acceptOffer", targetNamespace = "http://dota2chukucun.com/", className = "com.accp.myoa.wcf.AcceptOffer")
+    @ResponseWrapper(localName = "acceptOfferResponse", targetNamespace = "http://dota2chukucun.com/", className = "com.accp.myoa.wcf.AcceptOfferResponse")
     public String acceptOffer(
-        @WebParam(name = "appid", targetNamespace = "http://dota2chukucun.com/")
-        String appid,
-        @WebParam(name = "contextid", targetNamespace = "http://dota2chukucun.com/")
-        String contextid,
-        @WebParam(name = "assestid", targetNamespace = "http://dota2chukucun.com/")
-        String assestid,
-        @WebParam(name = "token", targetNamespace = "http://dota2chukucun.com/")
-        String token,
-        @WebParam(name = "randomstr", targetNamespace = "http://dota2chukucun.com/")
-        String randomstr);
+        @WebParam(name = "command", targetNamespace = "http://dota2chukucun.com/")
+        String command,
+        @WebParam(name = "jsonData", targetNamespace = "http://dota2chukucun.com/")
+        String jsonData);
 
 }

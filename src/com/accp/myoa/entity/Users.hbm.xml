@@ -12,10 +12,10 @@
             <column name="steamid" length="100" />
         </property>
         <property name="communityvisibilitystate" type="string">
-            <column name="communityvisibilitystate" length="2" />
+            <column name="communityvisibilitystate" length="100" />
         </property>
         <property name="profilestate" type="string">
-            <column name="profilestate" length="2" />
+            <column name="profilestate" length="100" />
         </property>
         <property name="personaname" type="string">
             <column name="personaname" length="100" />
@@ -36,7 +36,7 @@
             <column name="avatarfull" length="500" />
         </property>
         <property name="personastate" type="string">
-            <column name="personastate" length="2" />
+            <column name="personastate" length="100" />
         </property>
         <property name="primaryclanid" type="string">
             <column name="primaryclanid" length="100" />
@@ -45,7 +45,18 @@
             <column name="timecreated" length="100" />
         </property>
         <property name="personastateflags" type="string">
-            <column name="personastateflags" length="2" />
+            <column name="personastateflags" length="100" />
         </property>
+        <property name="tradeUrl" type="string">
+            <column name="tradeUrl" length="200" />
+        </property>
+         <property name="money" type="int">
+            <column name="money" />
+        </property>
+               
+        <set name="tradeLogs" cascade="save-update" lazy="false"> 
+			<key column="tradeuserid"></key> 
+			<one-to-many class="com.accp.myoa.entity.TradeLog"/> 
+		</set>        
     </class>
 </hibernate-mapping>

@@ -24,7 +24,7 @@
 		<property name="maxStatementsPerConnection" value="5"></property>	
 		<property name="maxIdleTime" value="3800"></property>  
 		<property name="maxStatements" value="0"/>  
-		<property name="checkoutTimeout" value="1000"/> 
+		<property name="checkoutTimeout" value="5000"/> 
 	</bean>
 	
 	<bean id="sessionFactory"
@@ -40,13 +40,19 @@
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
-		</property> 
+		</property> 	
 		<property name="mappingResources">
 			<list>					
 				<value>com/accp/myoa/entity/Goods.hbm.xml</value>	
 				<value>com/accp/myoa/entity/Tmp.hbm.xml</value>	
 				<value>com/accp/myoa/entity/Users.hbm.xml</value>
-				<value>com/accp/myoa/entity/Userinfo.hbm.xml</value>				
+				<value>com/accp/myoa/entity/Userinfo.hbm.xml</value>
+				<value>com/accp/myoa/entity/TradeGoods.hbm.xml</value>	
+				<value>com/accp/myoa/entity/SingleCardInfo.hbm.xml</value>	
+				<value>com/accp/myoa/entity/Cards.hbm.xml</value>	
+				<value>com/accp/myoa/entity/TradeLog.hbm.xml</value>
+				<value>com/accp/myoa/entity/Recharge.hbm.xml</value>
+				<value>com/accp/myoa/entity/CardPrice.hbm.xml</value>													
 			</list>
 		</property>
 	</bean>

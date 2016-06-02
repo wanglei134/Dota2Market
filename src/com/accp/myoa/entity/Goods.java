@@ -20,6 +20,7 @@ public class Goods implements java.io.Serializable {
     private String  type;
     private String  nameColor;
     private Date    lastupdatetime;
+    
 
     public Goods() {
     }

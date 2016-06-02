@@ -24,6 +24,23 @@ public class tmpGoods implements java.io.Serializable {
     private String  nameColor;
     private String  desctype;
     private List<String> descriptions;
+    private String assesstid;
+    /**
+     * Setter method for property <tt>assesstid</tt>.
+     * 
+     * @param assesstid value to be assigned to property assesstid
+     */
+    public void setAssesstid(String assesstid) {
+        this.assesstid = assesstid;
+    }
+    /**
+     * Getter method for property <tt>assesstid</tt>.
+     * 
+     * @return property value of assesstid
+     */
+    public String getAssesstid() {
+        return assesstid;
+    }
     
     /**
      * Setter method for property <tt>descriptions</tt>.

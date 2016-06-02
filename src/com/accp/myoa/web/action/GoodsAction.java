@@ -1,6 +1,7 @@
 package com.accp.myoa.web.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.text.DecimalFormat;
@@ -33,13 +34,19 @@ import org.openid4java.message.ParameterList;
 
 import com.accp.myoa.entity.Goods;
 import com.accp.myoa.entity.Tmp;
+import com.accp.myoa.entity.TradeGoods;
 import com.accp.myoa.entity.Users;
 import com.accp.myoa.entity.tmpGoods;
 import com.accp.myoa.service.GoodsService;
 import com.accp.myoa.service.TmpService;
+import com.accp.myoa.service.TradeGoodsService;
 import com.accp.myoa.service.UsersService;
+import com.accp.myoa.util.Dota2Result;
 import com.accp.myoa.util.GetUsersInfo;
+import com.accp.myoa.util.HttpUtil;
+import com.accp.myoa.util.PrintUtil;
 import com.accp.myoa.util.TaxUtil;
+import com.accp.myoa.wcf.TradeService_Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 
@@ -76,6 +83,15 @@ public class GoodsAction extends DispatchAction {
         this.tmpService = tmpService;
     }
 
+    private TradeGoodsService tradeGoodsService;
+    /**
+     * Setter method for property <tt>tradeGoodsService</tt>.
+     * 
+     * @param tradeGoodsService value to be assigned to property tradeGoodsService
+     */
+    public void setTradeGoodsService(TradeGoodsService tradeGoodsService) {
+        this.tradeGoodsService = tradeGoodsService;
+    }
     private Goods goods;
 
     /**
@@ -93,10 +109,10 @@ public class GoodsAction extends DispatchAction {
         this.goodsService = goodsService;
     }
 
-    public ActionForward toIndividualInfo(ActionMapping mapping, ActionForm form,
+    public ActionForward toMain(ActionMapping mapping, ActionForm form,
                                           HttpServletRequest request,
                                           HttpServletResponse response) {
-        return mapping.findForward("individualInfo");
+        return mapping.findForward("main");
     }
 
     //escape sql tag with the source code.      
@@ -160,15 +176,18 @@ public class GoodsAction extends DispatchAction {
                     isDBExist.setProfilestate(u.getProfilestate());
                     isDBExist.setProfileurl(u.getProfileurl());
                     usersService.update(isDBExist);
-                }
-                request.setAttribute("steamId", steamId);
-                session.setAttribute("user", u);                  
+                }               
+                u=(Users) usersService.getResult("from Users where steamid="+u.getSteamid());
+                if(u!=null){
+                    request.setAttribute("steamId", steamId);
+                    session.setAttribute("user", u);       
+                }                         
             }
         } catch (Exception e) {
-            return mapping.findForward("toDotaManager");
+            return mapping.findForward("loginin");
         }
 
-        return mapping.findForward("toDotaManager");
+        return mapping.findForward("loginin");
     }
     
     public ActionForward logout(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -188,7 +207,8 @@ public class GoodsAction extends DispatchAction {
         manager.setAssociations(new InMemoryConsumerAssociationStore());
         manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
         manager.setMinAssocSessEnc(AssociationSessionType.DH_SHA256);
-        String returnUrl = "http://dota2chukucun.com/goods.do?operate=callbackfunc";
+        //String returnUrl = "http://dota2chukucun.com/goods.do?operate=callbackfunc";
+        String returnUrl = "http://localhost:8080/DOTA/goods.do?operate=callbackfunc";
         List discoveries = manager.discover(GOOGLE_ENDPOINT);
         DiscoveryInformation discovered = manager.associate(discoveries);
         request.getSession().setAttribute("openid-disc", discovered);
@@ -343,7 +363,246 @@ public class GoodsAction extends DispatchAction {
         request.setAttribute("afterTaxPrice", afterTaxPrice);
         long endTime=System.currentTimeMillis();
         System.out.println("组装数据耗时:"+(endTime-begin));
-        return mapping.findForward("toDotaManager");
+        return mapping.findForward("main");
+    }
+    
+    public ActionForward cunru(ActionMapping mapping, ActionForm form,
+                                        HttpServletRequest request, HttpServletResponse response) {
+        
+        try {
+            String itemStr=request.getParameter("items");
+            String steamId = request.getParameter("steamId");
+            String type = request.getParameter("type");
+            HttpSession session=request.getSession();
+            Users u=(Users) session.getAttribute("user");
+            //String token=u.getTradeUrl().split("token")[1].split("=")[1];
+            String token="tUr92zqc";
+            List<String> list= (List<String>) JSONArray.parse(itemStr);
+            String it="";
+            for (String s : list) {
+                it+=s+",";
+            }
+            TradeService_Service tradeService=new TradeService_Service();
+            String result=tradeService.getBasicHttpBindingTradeService().acceptOffer("send", steamId+"|"+token+"|"+it);
+            System.out.println("tradeResult:"+result);
+            //正确的返回结果应该是success开头
+            if(result.startsWith("success")){
+                PrintWriter out;
+                // 不加可能会造成前端无法识别
+                response.setContentType("text/json");
+                // 第二句不加可能会有乱码
+                response.setCharacterEncoding("utf-8");          
+                try {
+                    out = response.getWriter();
+                    out.write(JSONArray.toJSONString(new Dota2Result(true,"交易成功,请确认接受交易!,TradeOfferId="+result.split(":")[1])));
+                    out.flush();
+                    out.close();
+                    //将这笔交易信息保存起来
+                    List<TradeGoods> tradeList=null;
+                    try {
+                        while(tradeList==null){
+                            tradeList=HttpUtil.fetchTradeInfo(result.split(":")[1],steamId,type,"0");
+                        }
+                    } catch (Exception e) {
+                        //出错重新取数据直到取到数据为止
+                        while(tradeList==null){
+                            try {
+                                tradeList=HttpUtil.fetchTradeInfo(result.split(":")[1],steamId,type,"0");
+                            } catch (Exception e1) {
+                                try {
+                                    tradeList=HttpUtil.fetchTradeInfo(result.split(":")[1],steamId,type,"0");
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
+                                }
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                    //其他数据组装
+                    List<TradeGoods> newList=new ArrayList<TradeGoods>();
+                    for (TradeGoods trade : tradeList) {
+                        //tmp表找数据
+                        String hql="from Tmp where assesstid="+trade.getOldassestid();
+                        Tmp t= (Tmp) tmpService.getResult(hql);
+                        trade.setDescriptions(t.getDescriptions());
+                        trade.setDesctype(t.getDesctype());
+                        trade.setName(t.getName());
+                        trade.setChineseName(t.getChineseName());
+                        
+                        hql="from Goods where name="+encode(trade.getName())+" and type="+trade.getType();
+                        Goods g=(Goods) goodsService.getResult(hql);
+                        trade.setImgurl(g.getImgurl());
+                        //trade.setIconbase64(g.getIconBase64());
+                        trade.setPrice(g.getPrice());
+                        trade.setNameColor(g.getNameColor());
+                        newList.add(trade);
+                        //goods表找数据
+                    }
+                    //存起来
+                    for (TradeGoods tradeGoods : newList) {
+                        tradeGoodsService.add(tradeGoods);
+                    }
+                    return null;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else{              
+                PrintUtil.printJsonToJSP(response, new Dota2Result(false,"交易失败,请重试!,steam服务器未响应"));
+                return null;
+            }
+        } catch (Exception e) {           
+            PrintUtil.printJsonToJSP(response, new Dota2Result(false,"交易失败,请重试!\n"+e.getMessage()));
+            return null;
+        }   
+    }
+    
+    public ActionForward toDotaManager2(ActionMapping mapping, ActionForm form,
+                                       HttpServletRequest request, HttpServletResponse response) {
+        long begin=System.currentTimeMillis();
+        float tprice = 0f;
+        float salePrice = 0f;
+        int pageNum = 1;
+        String steamId = request.getParameter("steamId");
+        String isGuoFuId = request.getParameter("isGuoFuId");  
+        String ajax = request.getParameter("ajax");   
+        //判断是否是国服id
+        if(isGuoFuId!=null){
+           BigInteger bigInteger=new BigInteger(steamId);
+           bigInteger=bigInteger.add(new BigInteger("76561197960265728"));
+           steamId=bigInteger.toString();
+        }
+        String type = request.getParameter("type");
+        if (request.getParameter("pageNum") != null) {
+            pageNum = Integer.parseInt(request.getParameter("pageNum"));
+        }
+        String hql = "from Tmp t where t.name is not null and  t.steamId='" + steamId
+                     + "' and t.type=" + type + " order by price*1 desc";
+        List<Tmp> list = tmpService.findByPage(hql, 60, pageNum);
+
+        //查询有多少个没有取到价格的
+        String noPriceSql = "from Tmp t where t.name is not null and  t.steamId='" + steamId
+                            + "' and t.type=" + type + " and t.price='0.0'";
+        String noPriceCount = tmpService.getCount(noPriceSql) + "";
+        //算总价    
+        //需要计算总价,否则直接传
+        tprice = 0f;
+        String h = "select sum(replace(price,'999','0'))  From Tmp where steamId='" + steamId
+                   + "' and type=" + type;
+        Object o = tmpService.getPrice(h);
+        if (o != null)
+            tprice = Float.parseFloat(o.toString());
+
+        String sql_all_price = "select "
+                               + " sum(case when price*1.0>=0 and price*1.0<=0.2 then price end) as 'a',"
+                               + " sum(case when price*1.0>0.2 and price*1.0<=1 then price end) as 'b',"
+                               + " sum(case when price*1.0>1 and price*1.0<=10  then price end) as 'c',"
+                               + " sum(case when price*1.0>10 and price*1.0<999  then price end) as 'd'"
+                               + " from Tmp where steamId='" + steamId + "' and type=" + type;
+        Object[] price_object = (Object[]) tmpService.getPrice(sql_all_price);      
+        for (Object obj : price_object) {
+            if (obj != null) {
+                salePrice += Float.parseFloat(obj.toString());                 
+            }
+        }
+       
+        String qujian_sum_object_sql = "select "
+                + " sum(case when price*1.0>=0 and price*1.0<=0.2 then '1' end) as 'a',"
+                + " sum(case when price*1.0>0.2 and price*1.0<=1 then '1' end) as 'b',"
+                + " sum(case when price*1.0>1 and price*1.0<=10  then '1' end) as 'c',"
+                + " sum(case when price*1.0>10 and price*1.0<999 then '1' end) as 'd'"
+                + " from Tmp where steamId='" + steamId + "' and type=" + type;
+        Object[] qujian_sum_object = (Object[]) tmpService.getPrice(qujian_sum_object_sql);    
+        
+        //价格和数量格式化输出
+       for(int j=0;j<qujian_sum_object.length;j++){
+           if(qujian_sum_object[j]!=null){
+               qujian_sum_object[j]=new DecimalFormat("0").format(Float.parseFloat(qujian_sum_object[j].toString()));
+           }
+       }
+       
+       for(int k=0;k<price_object.length;k++){
+           if(k==0&&price_object[k]!=null){
+               price_object[k]=new DecimalFormat("0.00").format(Float.parseFloat(price_object[k].toString())/1.0);
+           }
+           if(k==1&&price_object[k]!=null){
+               price_object[k]=new DecimalFormat("0.00").format(Float.parseFloat(price_object[k].toString())/1.0);
+           }
+           if(k==2&&price_object[k]!=null){
+               price_object[k]=new DecimalFormat("0.00").format(Float.parseFloat(price_object[k].toString())/1.0);
+           }
+           if(k==3&&price_object[k]!=null){
+               price_object[k]=new DecimalFormat("0.00").format(Float.parseFloat(price_object[k].toString())/1.0);
+           }
+       }
+        //这个是要返回给页面的数据
+        List<tmpGoods> tmpGoodsList = new ArrayList<>();
+        tmpGoods tg = null;
+        //去查价格和图片信息
+        for (Tmp t : list) {
+            tg = new tmpGoods();
+            String n = encode(t.getName());
+            String h1 = "from Goods where name='" + n + "'"+" and type='"+type+"'";
+            int c = goodsService.getCount(h1);
+            List<Goods> g = goodsService.findByPage(h1, c, 1);
+            tg.setIconBase64(g.get(0).getIconBase64());
+            tg.setImgurl(g.get(0).getImgurl());
+            //名字使用中文名
+            tg.setName(t.getChineseName());
+            tg.setPrice(g.get(0).getPrice());
+            tg.setNameColor(g.get(0).getNameColor());
+            tg.setDesctype(t.getDesctype()); 
+            tg.setId(t.getId());
+            tg.setAssesstid(t.getAssesstid());
+            //处理desclist
+            JSONArray arr= JSON.parseArray(t.getDescriptions());    
+            List<String> desTmpList=new ArrayList<String>();
+            if(arr!=null)
+            {
+                for(int i=0;i<arr.size();i++){
+                   Map map=(Map) arr.get(i);
+                   desTmpList.add(map.get("value").toString());
+                }
+            }
+            tg.setDescriptions(desTmpList);
+            tmpGoodsList.add(tg);
+        }
+
+        String tp = new DecimalFormat("0.00").format(tprice);
+        String afterTaxPrice=new DecimalFormat("0.00").format(TaxUtil.calcAfterTaxPrice(tprice+""));
+        String salePriceStr = new DecimalFormat("0.00").format(salePrice);
+        int countForPage = tmpService.getCount(hql);
+        int maxPage = countForPage % 60 > 0 ? (countForPage / 60 + 1) : (countForPage / 60);
+        request.setAttribute("steamId", steamId);
+        request.setAttribute("goods", tmpGoodsList);
+        request.setAttribute("type", type);
+        request.setAttribute("count", countForPage);
+        request.setAttribute("total_price", tp);
+        request.setAttribute("pageNum", pageNum);
+        request.setAttribute("maxPage", maxPage);
+        request.setAttribute("noPriceCount", noPriceCount);
+        request.setAttribute("salePrice", salePriceStr);
+        request.setAttribute("qujian_sum_object", qujian_sum_object);
+        request.setAttribute("price_object", price_object);
+        request.setAttribute("afterTaxPrice", afterTaxPrice);
+        long endTime=System.currentTimeMillis();
+        System.out.println("组装数据耗时:"+(endTime-begin));
+        if(ajax!=null){
+            PrintWriter out;
+            // 不加可能会造成前端无法识别
+            response.setContentType("text/json");
+            // 第二句不加可能会有乱码
+            response.setCharacterEncoding("utf-8");          
+            try {
+                out = response.getWriter();
+                out.write(JSONArray.toJSONString(tmpGoodsList));
+                out.flush();
+                out.close();
+                return null;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return mapping.findForward("pull");
     }
 
 }
